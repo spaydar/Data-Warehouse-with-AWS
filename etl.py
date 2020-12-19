@@ -4,18 +4,36 @@ from sql_queries import copy_table_queries, insert_table_queries
 
 
 def load_staging_tables(cur, conn):
+    '''
+    Copies data from S3 to Redshift staging tables using the queries in `copy_table_queries` list.
+    
+        Parameters:
+            cur: A cursor used to execute SQL commands over an open connection to a Redshift database.
+            conn: An open connection to a Redshift database. Used to commit changes.
+    '''
     for query in copy_table_queries:
         cur.execute(query)
         conn.commit()
 
 
 def insert_tables(cur, conn):
+    '''
+    Inserts data into star schema tables from staging tables using the queries in `insert_table_queries` list.
+    
+        Parameters:
+            cur: A cursor used to execute SQL commands over an open connection to a Redshift database.
+            conn: An open connection to a Redshift database. Used to commit changes.
+    '''
     for query in insert_table_queries:
         cur.execute(query)
         conn.commit()
 
 
 def main():
+    '''
+    Uses config credentials to connect to Redshift database, copies data from S3 into Redshift staging tables, 
+        inserts data from staging tables into star schema tables, then finally closes the connection to the database.
+    '''
     config = configparser.ConfigParser()
     config.read('dwh.cfg')
 
