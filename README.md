@@ -114,8 +114,8 @@ Create Table:
         start_time      timestamp            NOT NULL        sortkey, 
         user_id         varchar              NOT NULL, 
         level           varchar, 
-        song_id         varchar, 
-        artist_id       varchar, 
+        song_id         varchar              NOT NULL, 
+        artist_id       varchar              NOT NULL, 
         session_id      int, 
         location        varchar, 
         user_agent      varchar
